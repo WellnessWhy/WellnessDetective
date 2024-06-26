@@ -206,35 +206,44 @@ const resultsContainer = document.getElementById('results-container');
 const resultsTable = document.getElementById('results-table').querySelector('tbody');
 
 // Generate questionnaire items
-questionnaire.forEach(item => {
+questionnaire.forEach((item, index) => {
     const div = document.createElement('div');
     div.classList.add('form-group');
 
     const label = document.createElement('label');
-    label.textContent = item.question;
     label.classList.add('font-weight-bold');
+
+    const questionNumber = document.createElement('span');
+    questionNumber.classList.add('font-weight-bold');
+    questionNumber.textContent = `${index + 1}. `;
+
+    const questionText = document.createElement('span');
+    questionText.textContent = item.question;
+
+    label.appendChild(questionNumber);
+    label.appendChild(questionText);
 
     const radioGroup = document.createElement('div');
     radioGroup.classList.add('form-check');
 
-    item.answers.forEach((answer, index) => {
+    item.answers.forEach((answer, answerIndex) => {
         const radioDiv = document.createElement('div');
         radioDiv.classList.add('form-check');
 
         const input = document.createElement('input');
         input.type = 'radio';
         input.name = item.id;
-        input.value = index + 1;
+        input.value = answerIndex + 1;
         input.classList.add('form-check-input');
-        input.id = `${item.id}_${index}`;
+        input.id = `${item.id}_${answerIndex}`;
 
-        const label = document.createElement('label');
-        label.textContent = answer;
-        label.classList.add('form-check-label');
-        label.htmlFor = input.id;
+        const answerLabel = document.createElement('label');
+        answerLabel.textContent = answer;
+        answerLabel.classList.add('form-check-label');
+        answerLabel.htmlFor = input.id;
 
         radioDiv.appendChild(input);
-        radioDiv.appendChild(label);
+        radioDiv.appendChild(answerLabel);
         radioGroup.appendChild(radioDiv);
     });
 
@@ -290,8 +299,3 @@ function updateResultsTable(data) {
         resultsTable.appendChild(row);
     });
 }
-
-
-
-
-
