@@ -203,33 +203,39 @@ const questionnaire = [
 
 const form = document.getElementById('questionnaire-form');
 const resultsContainer = document.getElementById('results-container');
-const resultsTable = document.getElementById('results-table');
+const resultsTable = document.getElementById('results-table').querySelector('tbody');
 
 // Generate questionnaire items
 questionnaire.forEach(item => {
     const div = document.createElement('div');
-    div.classList.add('questionnaire-item');
+    div.classList.add('form-group');
 
     const label = document.createElement('label');
     label.textContent = item.question;
+    label.classList.add('font-weight-bold');
 
     const radioGroup = document.createElement('div');
-    radioGroup.classList.add('radio-group');
+    radioGroup.classList.add('form-check');
 
     item.answers.forEach((answer, index) => {
-        const radio = document.createElement('label');
+        const radioDiv = document.createElement('div');
+        radioDiv.classList.add('form-check');
 
         const input = document.createElement('input');
         input.type = 'radio';
         input.name = item.id;
         input.value = index + 1;
+        input.classList.add('form-check-input');
+        input.id = `${item.id}_${index}`;
 
-        const span = document.createElement('span');
-        span.textContent = answer;
+        const label = document.createElement('label');
+        label.textContent = answer;
+        label.classList.add('form-check-label');
+        label.htmlFor = input.id;
 
-        radio.appendChild(input);
-        radio.appendChild(span);
-        radioGroup.appendChild(radio);
+        radioDiv.appendChild(input);
+        radioDiv.appendChild(label);
+        radioGroup.appendChild(radioDiv);
     });
 
     div.appendChild(label);
@@ -251,7 +257,7 @@ form.addEventListener('submit', (event) => {
     updateResultsTable(resultsData);
 
     // Show the results container
-    resultsContainer.classList.remove('hidden');
+    resultsContainer.classList.remove('d-none');
 });
 
 function calculateResults(responses) {
@@ -284,3 +290,8 @@ function updateResultsTable(data) {
         resultsTable.appendChild(row);
     });
 }
+
+
+
+
+
