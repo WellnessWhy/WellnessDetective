@@ -1,4 +1,5 @@
 const questionnaire = [
+    // Questions 1 to 67 as previously defined
     { id: 'q1', question: 'General fatigue or weakness', answers: ['Mild or rarely occurring', 'Moderate or regularly occurring', 'Severe or often occurring', 'Not applicable'] },
     { id: 'q2', question: 'Difficulty losing weight', answers: ['Mild or rarely occurring', 'Moderate or regularly occurring', 'Severe or often occurring', 'Not applicable'] },
     { id: 'q3', question: 'Frequent illness/infections', answers: ['Mild or rarely occurring', 'Moderate or regularly occurring', 'Severe or often occurring', 'Not applicable'] },
@@ -68,9 +69,18 @@ const questionnaire = [
     { id: 'q67', question: 'Chronic cough', answers: ['Mild or rarely occurring', 'Moderate or regularly occurring', 'Severe or often occurring', 'Not applicable'] }
 ];
 
-const form = document.getElementById('questionnaire-form');
-const resultsContainer = document.getElementById('results-container');
-const resultsTable = document.getElementById('results-table').querySelector('tbody');
+const measureNames = [
+    "Digestive",
+    "Intestinal",
+    "Circulatory/Cardiovascular",
+    "Nervous",
+    "Immune/Lymphatic",
+    "Respiratory",
+    "Urinary",
+    "Glandular/Endocrine",
+    "Structural",
+    "Reproductive"
+];
 
 // Weights for measures 1 to 10
 const weights = [
@@ -92,7 +102,7 @@ function calculateMeasure(responses, weights) {
 
 function calculateResults(responses) {
     const measures = weights.map((weightsArray, index) => ({
-        label: `Measure ${index + 1}`,
+        label: measureNames[index],
         value: calculateMeasure(responses, weightsArray)
     }));
     return measures;
